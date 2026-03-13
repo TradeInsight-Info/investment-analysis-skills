@@ -334,7 +334,7 @@ User triggers report
 
 ```
 fundamental-analysis/
-  plugin.json
+  .claude-plugin/plugin.json
   skills/
     income-statement-analysis/SKILL.md
     balance-sheet-analysis/SKILL.md
