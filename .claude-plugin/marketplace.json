@@ -36,8 +36,8 @@
         "moat"
       ],
       "agents": [
-        "./agents/fundamental-analyst",
-        "./agents/signal-rater"
+        "./agents/fundamental-analyst.md",
+        "./agents/signal-rater.md"
       ],
       "skills": [
         "./skills/fundamental-report",
