@@ -52,6 +52,9 @@ Consult `${CLAUDE_PLUGIN_ROOT}/skills/_shared/references/data-sources.md` for fu
 - Identify the largest individual insider holders (CEO, founder, board members).
 - Compare insider ownership to peer companies in the same sector.
 - Assess whether insider ownership is meaningful enough to align management interests with shareholders (generally above 1-3% is notable for large-caps; higher thresholds for small/mid-caps).
+- Evaluate whether insider ownership is concentrated in the founder/CEO or distributed across multiple executives and directors. Broad-based insider ownership is a stronger alignment signal.
+- Note any recent changes in ownership: significant increases through open-market purchases indicate confidence, while significant decreases may signal concern.
+- Check for pledged shares: insiders who have pledged shares as collateral for personal loans create forced-selling risk during stock price declines.
 
 **Transaction Pattern Analysis**
 - Aggregate insider purchases and sales over the past 3, 6, and 12 months.
@@ -60,6 +63,8 @@ Consult `${CLAUDE_PLUGIN_ROOT}/skills/_shared/references/data-sources.md` for fu
 - Identify any cluster buying (multiple insiders buying within a short window), which is a stronger bullish signal than isolated purchases.
 - Note any unusually large transactions relative to the insider's total holdings.
 - Flag any insider sales that are disproportionately large or occur before negative news.
+- Contextualize insider sales: regular diversification sales by executives with high concentration are less concerning than sudden, unplanned sales outside of normal patterns. Review whether the insider has a history of consistent selling at a fixed schedule versus sporadic, discretionary transactions.
+- Compare the current insider activity trend to the company's historical pattern and to sector norms. Some industries (e.g., biotech, tech startups) naturally see more insider selling due to equity-heavy compensation.
 
 Present insider transaction data in a table:
 
@@ -87,6 +92,8 @@ Present insider transaction data in a table:
 - Low performance hurdles that are easy to achieve.
 - Repricing of underwater stock options.
 - Golden parachutes with excessively generous change-of-control provisions.
+- Tax gross-up provisions on severance or change-of-control payments, which amplify the cost to shareholders.
+- Clawback policy weakness: evaluate whether the company has a robust clawback policy for incentive compensation in cases of restatement or misconduct, as required by SEC rules adopted under Dodd-Frank.
 
 ### Step 3 — Assess Corporate Governance
 
@@ -127,6 +134,11 @@ Present insider transaction data in a table:
 - Note the dividend initiation date and consecutive years of payment or growth.
 - Calculate the current payout ratio and assess sustainability.
 - Compare the dividend growth rate to earnings growth rate.
+
+**Overall Capital Allocation Framework**
+- Calculate how cumulative free cash flow over the past 5 years was distributed across: dividends, buybacks, M&A, debt repayment, and cash accumulation. Present this as a percentage breakdown.
+- Assess whether capital allocation priorities are appropriate given the company's lifecycle stage: growth companies should prioritize reinvestment, mature companies should return capital, and transitioning companies should balance both.
+- Evaluate management's stated capital allocation philosophy (from earnings calls and investor presentations) against actual behavior. Consistency between words and actions is a positive governance signal.
 
 Summarize the capital allocation assessment with a rating: Excellent, Good, Mixed, or Poor, with supporting evidence.
 
