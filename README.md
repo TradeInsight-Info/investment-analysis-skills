@@ -16,7 +16,7 @@ npx skills add https://github.com/TradeInsight-info/investment-analysis-skills -
 For Claude:
 
 ```bash
-claude add marketplace
+/plugin marketplace add https://github.com/TradeInsight-Info/investment-analysis-skills.git
 ```
 
 

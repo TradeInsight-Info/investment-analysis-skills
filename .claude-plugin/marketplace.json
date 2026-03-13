@@ -1,9 +1,8 @@
 {
   "name": "tradeinsight-marketplace",
   "description": "A collection of agents and skills for investment analysis — fundamental, technical, and sentiment analysis of publicly traded companies.",
-  "author": {
-    "name": "TradeInsight.info",
-    "url": "https://github.com/TradeInsight-info"
+  "owner": {
+    "name": "TradeInsight.info"
   },
   "repository": "https://github.com/TradeInsight-info/investment-analysis-skills",
   "plugins": [
@@ -13,6 +12,9 @@
       "description": "Comprehensive fundamental analysis of publicly traded companies — financial statements, valuation, moat analysis, signal ratings, and full research reports.",
       "category": "finance",
       "strict": false,
+      "author": {
+        "name": "TradeInsight.info"
+      },
       "keywords": [
         "investing",
         "fundamental-analysis",
