@@ -5,11 +5,13 @@
     "name": "TradeInsight.info"
   },
   "repository": "https://github.com/TradeInsight-info/investment-analysis-skills",
+  "version": "1.0.0",
   "plugins": [
     {
       "name": "fundamental-analysis",
       "source": "./fundamental-analysis",
       "description": "Comprehensive fundamental analysis of publicly traded companies — financial statements, valuation, moat analysis, signal ratings, and full research reports.",
+      "version": "0.0.2",
       "category": "finance",
       "strict": false,
       "author": {
