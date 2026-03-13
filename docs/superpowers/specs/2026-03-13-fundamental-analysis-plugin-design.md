@@ -152,41 +152,41 @@ Concentration risks (customer/product/geographic), leverage risk, accounting qua
 
 Each fires based on description matching when the user asks a relevant question. Every analysis coverage area (#1-14) has a corresponding skill.
 
-| Skill File | Trigger Description | Coverage Areas |
+| Skill | Trigger Description | Coverage Areas |
 |---|---|---|
-| `income-statement-analysis.md` | User asks about revenue, earnings, EPS, margins, income statement of a company | #1 Income Statement |
-| `balance-sheet-analysis.md` | User asks about assets, liabilities, equity, book value, balance sheet of a company | #2 Balance Sheet |
-| `cash-flow-analysis.md` | User asks about cash flow, free cash flow, FCF, operating cash flow, quality of earnings | #3 Cash Flow |
-| `profitability-analysis.md` | User asks about ROE, ROA, ROIC, return on capital, DuPont decomposition, profitability | #4 Profitability |
-| `valuation-analysis.md` | User asks if a stock is overvalued/undervalued, P/E, EV/EBITDA, DCF | #5 Valuation |
-| `financial-health.md` | User asks about debt levels, liquidity, solvency, balance sheet strength, current ratio | #6 Financial Health |
-| `growth-analysis.md` | User asks about revenue/earnings growth, growth rates, forward estimates | #7 Growth |
-| `efficiency-analysis.md` | User asks about working capital, cash conversion cycle, asset turnover | #8 Efficiency |
-| `dividend-analysis.md` | User asks about dividends, yield, payout ratio, dividend safety | #9 Dividend |
-| `analyst-estimates.md` | User asks about price targets, analyst ratings, consensus estimates | #10 Analyst Estimates |
-| `moat-analysis.md` | User asks about economic moat, moat durability, switching costs, network effects, ROIC vs WACC | #11 Moat |
-| `competitive-position.md` | User asks about competitive advantage, market position, Porter's Five Forces | #12 Competitive Position |
-| `insider-activity.md` | User asks about insider buying/selling, Form 4 filings, management governance | #13 Management & Governance |
-| `risk-assessment.md` | User asks about risks, red flags, accounting quality of a company | #14 Risk Assessment |
+| `income-statement-analysis/SKILL.md` | User asks about revenue, earnings, EPS, margins, income statement of a company | #1 Income Statement |
+| `balance-sheet-analysis/SKILL.md` | User asks about assets, liabilities, equity, book value, balance sheet of a company | #2 Balance Sheet |
+| `cash-flow-analysis/SKILL.md` | User asks about cash flow, free cash flow, FCF, operating cash flow, quality of earnings | #3 Cash Flow |
+| `profitability-analysis/SKILL.md` | User asks about ROE, ROA, ROIC, return on capital, DuPont decomposition, profitability | #4 Profitability |
+| `valuation-analysis/SKILL.md` | User asks if a stock is overvalued/undervalued, P/E, EV/EBITDA, DCF | #5 Valuation |
+| `financial-health/SKILL.md` | User asks about debt levels, liquidity, solvency, balance sheet strength, current ratio | #6 Financial Health |
+| `growth-analysis/SKILL.md` | User asks about revenue/earnings growth, growth rates, forward estimates | #7 Growth |
+| `efficiency-analysis/SKILL.md` | User asks about working capital, cash conversion cycle, asset turnover | #8 Efficiency |
+| `dividend-analysis/SKILL.md` | User asks about dividends, yield, payout ratio, dividend safety | #9 Dividend |
+| `analyst-estimates/SKILL.md` | User asks about price targets, analyst ratings, consensus estimates | #10 Analyst Estimates |
+| `moat-analysis/SKILL.md` | User asks about economic moat, moat durability, switching costs, network effects, ROIC vs WACC | #11 Moat |
+| `competitive-position/SKILL.md` | User asks about competitive advantage, market position, Porter's Five Forces | #12 Competitive Position |
+| `insider-activity/SKILL.md` | User asks about insider buying/selling, Form 4 filings, management governance | #13 Management & Governance |
+| `risk-assessment/SKILL.md` | User asks about risks, red flags, accounting quality of a company | #14 Risk Assessment |
 
 ### Auto-Triggered Utility Skills (3)
 
 These are helper skills that don't map to a single analysis area. They are also auto-triggered but serve a different role.
 
-| Skill File | Trigger Description | Role |
+| Skill | Trigger Description | Role |
 |---|---|---|
-| `sec-filing-reader.md` | User asks to read/summarize a 10-K, 10-Q, proxy, or other SEC filing | Utility — fetches and summarizes raw SEC filings on demand |
-| `peer-comparison.md` | User asks to compare a company against competitors or industry | Utility — pulls metrics from multiple analysis areas for side-by-side comparison |
-| `cross-validation.md` | User asks to validate/cross-check financial data across multiple sources | Utility — also invoked programmatically in report orchestration (sequential post-step) |
+| `sec-filing-reader/SKILL.md` | User asks to read/summarize a 10-K, 10-Q, proxy, or other SEC filing | Utility — fetches and summarizes raw SEC filings on demand |
+| `peer-comparison/SKILL.md` | User asks to compare a company against competitors or industry | Utility — pulls metrics from multiple analysis areas for side-by-side comparison |
+| `cross-validation/SKILL.md` | User asks to validate/cross-check financial data across multiple sources | Utility — also invoked programmatically in report orchestration (sequential post-step) |
 
 Note: `cross-validation` has dual usage — it auto-triggers when users explicitly ask to verify data, and it is also invoked programmatically by the `fundamental-analyst` agent as a sequential post-step after collecting all parallel results.
 
 ### User-Invocable Skills (Slash Commands) (2)
 
-| Skill File | Command | Purpose |
+| Skill | Command | Purpose |
 |---|---|---|
-| `fundamental-report.md` | `/fundamental-report {ticker}` | Full research note covering all 14 areas at summary depth (key metrics + brief interpretation per area) |
-| `fundamental-report-detailed.md` | `/fundamental-report-detailed {ticker}` | Comprehensive report covering all 14 areas at detailed depth (full data tables, trend analysis, extended commentary) |
+| `fundamental-report/SKILL.md` | `/fundamental-report {ticker}` | Full research note covering all 14 areas at summary depth (key metrics + brief interpretation per area) |
+| `fundamental-report-detailed/SKILL.md` | `/fundamental-report-detailed {ticker}` | Comprehensive report covering all 14 areas at detailed depth (full data tables, trend analysis, extended commentary) |
 
 ### Skill Output Format
 
@@ -210,7 +210,7 @@ Orchestrates skills for complex, multi-step fundamental analysis questions.
 - Tools: `WebSearch`, `WebFetch`, `Read`, `Write`
 - Example triggers: "Do a full fundamental analysis of MSFT", "Compare META's financials to GOOG", "What are the strengths and weaknesses of NVDA?"
 
-### signal-rating
+### signal-rater
 
 Aggregates Buy/Hold/Sell ratings from multiple sources and produces a synthesized overall rating. **Fully independent** — fetches all its own data; does not consume output from any parallel analysis skill.
 
@@ -254,7 +254,7 @@ Overall Signal (Buy/Hold/Sell)
 
 ### 2. Signal Rating
 
-Aggregated Buy/Hold/Sell with per-source breakdown (from signal-rating agent).
+Aggregated Buy/Hold/Sell with per-source breakdown (from signal-rater agent).
 
 ### 3. Detailed Analysis
 
@@ -309,7 +309,7 @@ User triggers report
         │              ├─ risk-assessment               (area #14)
         │              ├─ peer-comparison               (utility)
         │              ├─ sec-filing-reader             (utility, 10-K summary)
-        │              └─ signal-rating agent           (independent)
+        │              └─ signal-rater agent           (independent)
         │                        │
         │              all 17 results collected
         │                        │
@@ -320,7 +320,7 @@ User triggers report
 
 **Step 0 — Ticker Resolution**: Before the parallel fan-out, a shared pre-step resolves the ticker to a CIK number (via `company_tickers.json`) and caches company metadata (name, exchange, sector). This avoids redundant lookups across skills and handles edge cases (ambiguous tickers, delisted companies) in one place. The resolved CIK and metadata are passed to all parallel skills.
 
-**Parallel phase**: 14 analysis skills + 2 utility skills + 1 agent = 17 parallel tasks. Each fetches its own data independently. The signal-rating agent does not consume output from any parallel skill.
+**Parallel phase**: 14 analysis skills + 2 utility skills + 1 agent = 17 parallel tasks. Each fetches its own data independently. The signal-rater agent does not consume output from any parallel skill.
 
 **Sequential phase**: Cross-validation runs after all results are collected, comparing key data points against alternative sources and flagging discrepancies.
 
@@ -333,28 +333,29 @@ User triggers report
 ## Plugin File Structure
 
 ```
-plugin.json
-skills/
-  income-statement-analysis.md
-  balance-sheet-analysis.md
-  cash-flow-analysis.md
-  profitability-analysis.md
-  valuation-analysis.md
-  financial-health.md
-  growth-analysis.md
-  efficiency-analysis.md
-  dividend-analysis.md
-  analyst-estimates.md
-  moat-analysis.md
-  competitive-position.md
-  insider-activity.md
-  risk-assessment.md
-  sec-filing-reader.md
-  peer-comparison.md
-  cross-validation.md
-  fundamental-report.md
-  fundamental-report-detailed.md
-agents/
-  fundamental-analyst.md
-  signal-rating.md
+fundamental-analysis/
+  plugin.json
+  skills/
+    income-statement-analysis/SKILL.md
+    balance-sheet-analysis/SKILL.md
+    cash-flow-analysis/SKILL.md
+    profitability-analysis/SKILL.md
+    valuation-analysis/SKILL.md
+    financial-health/SKILL.md
+    growth-analysis/SKILL.md
+    efficiency-analysis/SKILL.md
+    dividend-analysis/SKILL.md
+    analyst-estimates/SKILL.md
+    moat-analysis/SKILL.md
+    competitive-position/SKILL.md
+    insider-activity/SKILL.md
+    risk-assessment/SKILL.md
+    sec-filing-reader/SKILL.md
+    peer-comparison/SKILL.md
+    cross-validation/SKILL.md
+    fundamental-report/SKILL.md
+    fundamental-report-detailed/SKILL.md
+  agents/
+    fundamental-analyst.md
+    signal-rater.md
 ```
