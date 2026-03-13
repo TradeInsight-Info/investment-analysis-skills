@@ -168,18 +168,20 @@ Provide context by comparing current estimates against the company's recent trac
 
 Evaluate the reliability and depth of the analyst consensus:
 
-- **Coverage depth:** Number of analysts covering the stock. Fewer than 5 indicates thin coverage with less reliable consensus. More than 20 indicates deep institutional coverage.
-- **Estimate dispersion:** Wide spreads between high and low estimates indicate uncertainty. Tight clustering indicates consensus confidence.
-- **Revision momentum:** Consistent direction of revisions (mostly up or mostly down) is more informative than mixed signals.
+- **Coverage depth:** Number of analysts covering the stock. Fewer than 5 indicates thin coverage with less reliable consensus — note this prominently as it reduces confidence in all consensus figures. Between 5-15 analysts is typical mid-cap coverage. More than 20 indicates deep institutional coverage with a well-established consensus.
+- **Estimate dispersion:** Calculate the spread between high and low estimates as a percentage of the mean. A spread below 10% indicates strong consensus agreement. A spread above 25% indicates significant disagreement, which may reflect uncertainty about a key business driver, an upcoming binary event (e.g., regulatory decision, clinical trial), or different modeling assumptions among analysts.
+- **Revision momentum:** Consistent direction of revisions (mostly up or mostly down) is more informative than mixed signals. Count the ratio of upward to downward revisions over the last 30 days if available — a ratio above 2:1 in either direction indicates strong directional consensus.
+- **Staleness risk:** Identify whether estimates may be stale by checking the most recent earnings date. If a new quarter has been reported but estimates have not been widely updated, note that some figures may not yet reflect the latest results.
 
 ### Step 8 — Synthesize Analyst Sentiment
 
 Provide an overall summary of what the analyst community expects:
 
-- State whether the consensus outlook is bullish, neutral, or bearish based on the combination of recommendation distribution, price target upside, and estimate revision trends.
-- Identify any disconnect between the recommendation consensus (e.g., mostly Buy) and implied price target upside (e.g., limited upside to average target). This disconnect is common in stocks that have rallied to meet targets but where analysts have not yet downgraded.
-- Note whether the stock appears to be in an estimate revision upgrade cycle or downgrade cycle.
-- Highlight the key upcoming catalyst (next earnings date) that will test current estimates.
+- State whether the consensus outlook is **Bullish** (majority Buy/Strong Buy, positive revisions, meaningful price target upside), **Neutral** (majority Hold, stable estimates, limited price target movement), or **Bearish** (presence of Sell ratings, downward revisions, price target below current price) based on the combination of recommendation distribution, price target upside, and estimate revision trends.
+- Identify any disconnect between the recommendation consensus (e.g., mostly Buy) and implied price target upside (e.g., limited upside to average target). This disconnect is common in stocks that have rallied to meet targets but where analysts have not yet downgraded. It often precedes a wave of price target increases or rating downgrades.
+- Note whether the stock appears to be in an estimate revision upgrade cycle (accelerating positive revisions) or downgrade cycle (accelerating negative revisions), and how long the current cycle has persisted.
+- Highlight the key upcoming catalyst (next earnings date) that will test current estimates. Compute the number of days until the next expected earnings report if known.
+- Summarize in one sentence the core expectation embedded in the consensus: what must the company deliver for the current estimates and price targets to be met?
 
 ## Depth Handling
 

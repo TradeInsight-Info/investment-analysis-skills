@@ -31,9 +31,10 @@ Consult `${CLAUDE_PLUGIN_ROOT}/skills/_shared/references/data-sources.md` for fu
 
 1. Fetch the company's long-term debt (`LongTermDebt`) and stockholders' equity (`StockholdersEquity`) from EDGAR.
 2. Fetch the current risk-free rate and equity risk premium via WebSearch (search for "current US 10-year Treasury yield" and "Damodaran equity risk premium").
-3. Estimate beta from Stock Analysis or Gurufocus.
-4. Compute WACC using the standard formula: WACC = (E/V) * Re + (D/V) * Rd * (1 - Tax Rate), where Re = Rf + Beta * ERP.
-5. If precise inputs are unavailable, use a reasonable sector-average WACC estimate and note the assumption.
+3. Estimate beta from Stock Analysis or Gurufocus. If beta is unavailable, use the sector median beta as a proxy and note the assumption.
+4. Estimate the pre-tax cost of debt from interest expense divided by average total debt, or from the company's credit rating spread over Treasuries if available.
+5. Compute WACC using the standard formula: WACC = (E/V) * Re + (D/V) * Rd * (1 - Tax Rate), where Re = Rf + Beta * ERP. Use market values for equity (market cap) and book values for debt unless market debt data is readily available.
+6. If precise inputs are unavailable, use a reasonable sector-average WACC estimate and note the assumption. Common sector WACC ranges: technology 8-12%, consumer staples 6-9%, utilities 5-7%, financials 8-11%.
 
 ### Step 3 — Gather Qualitative Moat Evidence
 
@@ -50,20 +51,23 @@ Consult `${CLAUDE_PLUGIN_ROOT}/skills/_shared/references/data-sources.md` for fu
 Evaluate each of the five Morningstar moat sources and determine which ones apply to the company. For each source, provide specific evidence:
 
 **Intangible Assets**
-- Assess brand strength: pricing premium over competitors, brand recognition surveys, brand value rankings.
-- Review patent portfolio: number of active patents, patent citation rates, remaining patent life for key products.
-- Identify regulatory licenses or approvals: FDA approvals, banking charters, spectrum licenses, government contracts with high barriers to recompete.
+- Assess brand strength: pricing premium over competitors, brand recognition surveys, brand value rankings (e.g., Interbrand, Brand Finance). Quantify the premium by comparing average selling prices to commodity alternatives in the same category.
+- Review patent portfolio: number of active patents, patent citation rates, remaining patent life for key products. Determine whether patents protect core revenue streams or are peripheral.
+- Identify regulatory licenses or approvals: FDA approvals, banking charters, spectrum licenses, government contracts with high barriers to recompete. Evaluate how long these licenses take to obtain and whether they are exclusive or limited in number.
+- Assess the combined strength of intangible assets: a brand alone may not constitute a moat unless it translates to measurable pricing power; patents must be enforceable and difficult to design around; licenses must create meaningful barriers.
 
 **Switching Costs**
-- Identify integration depth: how deeply the product embeds into customer workflows, data, or infrastructure.
-- Evaluate contract structures: long-term agreements, auto-renewal terms, early termination penalties.
-- Assess retraining costs: time and expense required for customers to switch to a competing product.
-- Look for evidence in customer retention rates and net revenue retention (especially for SaaS companies).
+- Identify integration depth: how deeply the product embeds into customer workflows, data, or infrastructure. Enterprise software, ERP systems, and data platforms typically have the highest switching costs.
+- Evaluate contract structures: long-term agreements, auto-renewal terms, early termination penalties. Note the average contract length and renewal rate if disclosed.
+- Assess retraining costs: time and expense required for customers to switch to a competing product. Consider certification programs, proprietary skill requirements, and ecosystem lock-in.
+- Look for evidence in customer retention rates and net revenue retention (especially for SaaS companies). NRR above 120% strongly indicates switching cost moat combined with expansion revenue.
+- Evaluate data lock-in: whether customers accumulate proprietary data, history, or configurations within the product that would be costly or impossible to migrate.
 
 **Network Effects**
-- Classify the type: direct (user-to-user value), indirect (platform/marketplace), or data network effects.
-- Evaluate strength: user base size relative to competitors, engagement metrics, cross-side adoption rates.
-- Assess vulnerability: potential for multi-homing, winner-take-all dynamics, local vs global network effects.
+- Classify the type: direct (user-to-user value, e.g., social networks, messaging), indirect (platform/marketplace, e.g., app stores, payment networks), or data network effects (more users improve the product via data, e.g., search engines, recommendation systems).
+- Evaluate strength: user base size relative to competitors, engagement metrics, cross-side adoption rates. Determine whether the network effect has reached critical mass or is still building.
+- Assess vulnerability: potential for multi-homing (users active on multiple competing platforms), winner-take-all dynamics versus coexistence, local versus global network effects. Local network effects (e.g., ride-sharing in a city) are more vulnerable than global ones.
+- Consider whether the network effect creates a virtuous cycle: more users attract more supply, which attracts more users, creating compounding advantage.
 
 **Cost Advantages**
 - Process-driven: proprietary manufacturing, technology, or distribution that lowers unit cost.
@@ -72,9 +76,10 @@ Evaluate each of the five Morningstar moat sources and determine which ones appl
 - Compare gross margins and operating margins against the peer group over multiple years.
 
 **Efficient Scale**
-- Evaluate whether the addressable market is limited enough that it naturally supports only a few profitable competitors.
-- Look for examples: utilities, railroads, pipelines, defense primes, niche industrial markets.
-- Assess whether new entry would destroy returns for all participants.
+- Evaluate whether the addressable market is limited enough that it naturally supports only a few profitable competitors. Calculate the ratio of minimum efficient scale to total market demand.
+- Look for examples: utilities, railroads, pipelines, defense primes, niche industrial markets, specialized testing and certification services.
+- Assess whether new entry would destroy returns for all participants, making entry economically irrational even absent any other barrier.
+- Distinguish efficient scale from other moat sources: the moat arises from the market's limited size, not from the incumbent's cost advantages or brand strength.
 
 ### Step 2 — Quantify Moat Strength with Financial Signals
 
@@ -99,7 +104,9 @@ Determine whether the moat is widening, stable, or narrowing:
 - **Stable:** Consistent excess returns, steady margins, maintained market share.
 - **Narrowing:** ROIC-WACC spread compressing, margin erosion, market share loss, competitive disruption emerging.
 
-Identify specific threats to the moat: technological disruption, regulatory changes, new entrants with different business models, customer preference shifts.
+Identify specific threats to the moat: technological disruption, regulatory changes, new entrants with different business models, customer preference shifts, commoditization of previously differentiated features, and erosion of switching costs through interoperability standards or open-source alternatives.
+
+Consider the historical persistence of each moat source. Some moat types are inherently more durable than others: switching costs in mission-critical enterprise software tend to persist for decades, while brand moats in consumer goods can erode within a few years if quality or relevance slips. Network effects can flip rapidly if a superior platform achieves critical mass.
 
 ### Step 4 — Assign Moat Rating
 
@@ -110,6 +117,16 @@ Assign one of three ratings with a confidence level:
 - **No Moat:** No durable competitive advantages, ROIC near or below WACC, competitive position eroding.
 
 Provide the rating, a confidence level (High / Medium / Low), and a 2-3 sentence justification.
+
+When assigning confidence, consider data availability and analytical certainty. High confidence requires strong quantitative support (long ROIC track record, clear margin trends) combined with identifiable qualitative moat sources. Medium confidence reflects either limited data history or mixed signals across moat indicators. Low confidence indicates that the assessment is based primarily on qualitative judgment due to insufficient quantitative data or a company in rapid transition.
+
+### Step 5 — Peer Moat Comparison
+
+When detailed depth is requested, compare the target company's moat characteristics against its 2-3 closest peers:
+
+- Present a side-by-side table of ROIC, ROIC-WACC spread, gross margin, and operating margin for the target and each peer over the most recent 5 years.
+- Note which peers have wider, narrower, or equivalent moats and identify the primary differentiating factor.
+- Assess whether the industry structure supports multiple wide-moat companies (e.g., Visa and Mastercard in payments) or only one dominant moat holder.
 
 ## Depth Handling
 

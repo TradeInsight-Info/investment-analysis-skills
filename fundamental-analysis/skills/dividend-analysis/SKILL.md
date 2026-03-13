@@ -152,11 +152,19 @@ Present a table:
 
 Evaluate whether the dividend can be maintained under adverse conditions:
 
-- **Earnings Decline Scenario:** If earnings fell 20-30% from the most recent year, would the earnings payout ratio exceed 100%? Would the FCF payout ratio exceed 100%?
-- **Historical Resilience:** During the most recent recession or downturn (2020 COVID, 2008 GFC, or the company's worst recent year), was the dividend maintained, frozen, or cut?
-- **Debt Capacity:** Does the company have sufficient balance sheet strength (low leverage, strong interest coverage) to maintain the dividend even during a temporary earnings decline?
+- **Earnings Decline Scenario:** If earnings fell 20% from the most recent year, calculate the resulting earnings payout ratio and FCF payout ratio. Repeat for a 30% decline. If either ratio exceeds 100% under the 20% scenario, flag the dividend as vulnerable. Present results in a table:
 
-Classify dividend sustainability as: **Very Safe**, **Safe**, **Moderate Risk**, **Elevated Risk**, or **Unsafe**, with a brief justification.
+| Scenario | Earnings Payout | FCF Payout | Sustainable? |
+|----------|----------------|------------|-------------|
+| Current | | | |
+| Earnings -20% | | | |
+| Earnings -30% | | | |
+
+- **Historical Resilience:** During the most recent recession or downturn (2020 COVID, 2008 GFC, or the company's worst recent year), was the dividend maintained, frozen, or cut? If the company maintained or grew the dividend through a downturn, this is a strong positive signal. If it was cut, note the magnitude of the cut and how long it took to restore.
+- **Debt Capacity:** Does the company have sufficient balance sheet strength (low leverage, strong interest coverage) to maintain the dividend even during a temporary earnings decline? Check whether debt covenants restrict dividend payments at certain leverage levels.
+- **Cash Reserves:** Determine whether the company has sufficient cash on hand to cover 1-2 years of dividend payments from reserves alone if free cash flow temporarily turned negative.
+
+Classify dividend sustainability as: **Very Safe** (FCF payout below 50%, long streak, survived recessions), **Safe** (FCF payout below 70%, consistent history), **Moderate Risk** (FCF payout 70-90%, limited headroom), **Elevated Risk** (FCF payout above 90%, thin coverage), or **Unsafe** (FCF payout above 100% or recent cut), with a brief justification.
 
 ### Step 7 — Special and Irregular Dividends
 

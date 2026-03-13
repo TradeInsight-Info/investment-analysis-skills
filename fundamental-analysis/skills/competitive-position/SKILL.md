@@ -25,11 +25,11 @@ Consult `${CLAUDE_PLUGIN_ROOT}/skills/_shared/references/data-sources.md` for fu
 
 ### Step 2 — Gather Industry and Competitor Data
 
-1. Fetch the company's financial summary from Stock Analysis (`/financials/` and `/financials/ratios/`) to establish baseline metrics.
-2. Use WebSearch to identify the top 3-5 direct competitors by revenue in the same industry segment.
-3. For each major competitor, fetch key financial metrics from Stock Analysis for peer comparison: revenue, operating margin, market capitalization, and revenue growth.
-4. Use WebSearch to gather recent industry reports, market size estimates, growth projections, and competitive dynamics commentary.
-5. Search for industry concentration data (e.g., Herfindahl-Hirschman Index estimates, top-4 or top-10 market share).
+1. Fetch the company's financial summary from Stock Analysis (`/financials/` and `/financials/ratios/`) to establish baseline metrics including revenue, gross margin, operating margin, and revenue growth over the past 3-5 years.
+2. Use WebSearch to identify the top 3-5 direct competitors by revenue in the same industry segment. Search for "{industry} market share" and "{industry} top companies by revenue" to find reliable rankings.
+3. For each major competitor, fetch key financial metrics from Stock Analysis for peer comparison: revenue, operating margin, market capitalization, revenue growth, R&D spending as a percentage of revenue, and capital expenditure intensity.
+4. Use WebSearch to gather recent industry reports, market size estimates, growth projections, and competitive dynamics commentary. Prioritize reports from industry associations, consulting firms, and financial research providers.
+5. Search for industry concentration data (e.g., Herfindahl-Hirschman Index estimates, top-4 or top-10 market share). If formal HHI data is unavailable, estimate concentration from the revenue shares of the top players.
 
 ### Step 3 — Gather Regulatory and Disruption Context
 
@@ -56,11 +56,12 @@ Provide a concise industry overview covering:
 Evaluate each of the five forces on a scale of Low / Medium / High intensity, with specific evidence:
 
 **Threat of New Entrants**
-- Assess capital requirements for entry: initial investment, minimum efficient scale.
-- Evaluate regulatory and licensing barriers: permits, certifications, compliance costs.
-- Examine brand loyalty and customer switching behavior among incumbents.
-- Identify technology or know-how barriers: proprietary technology, patents, learning curve.
-- Consider access to distribution channels and supplier relationships.
+- Assess capital requirements for entry: initial investment, minimum efficient scale, and time to breakeven for a new entrant.
+- Evaluate regulatory and licensing barriers: permits, certifications, compliance costs, and the time required to obtain approvals.
+- Examine brand loyalty and customer switching behavior among incumbents. Consider whether customers exhibit inertia or actively evaluate alternatives.
+- Identify technology or know-how barriers: proprietary technology, patents, learning curve, and the availability of skilled talent in the market.
+- Consider access to distribution channels and supplier relationships. Evaluate whether incumbents have exclusive arrangements that lock out new entrants.
+- Assess the track record of recent entry attempts: have new entrants succeeded or failed in the past 5 years, and what factors determined the outcome.
 - Rate the overall threat level and explain the reasoning.
 
 **Bargaining Power of Suppliers**
@@ -86,11 +87,12 @@ Evaluate each of the five forces on a scale of Low / Medium / High intensity, wi
 - Rate the overall substitute threat and explain the reasoning.
 
 **Competitive Rivalry**
-- Assess the number and relative size of competitors.
-- Evaluate industry growth rate relative to capacity: slow growth increases rivalry.
-- Determine the level of product differentiation or commoditization.
-- Examine exit barriers: specialized assets, strategic importance, emotional attachment.
-- Review recent pricing behavior: price wars, discounting trends, margin compression.
+- Assess the number and relative size of competitors. A few equally sized players often creates more intense rivalry than one dominant leader with smaller followers.
+- Evaluate industry growth rate relative to capacity: slow growth increases rivalry as firms compete for a fixed pie.
+- Determine the level of product differentiation or commoditization. Highly commoditized products lead to price-based competition.
+- Examine exit barriers: specialized assets, strategic importance, emotional attachment, labor agreements, and government restrictions on closure.
+- Review recent pricing behavior: price wars, discounting trends, margin compression across the industry over the past 3-5 years.
+- Assess the role of innovation cycles: industries with rapid product cycles may see rivalry intensify during technology transitions.
 - Rate the overall rivalry intensity and explain the reasoning.
 
 Present the Five Forces summary in a table:
@@ -111,7 +113,9 @@ Evaluate how the target company is positioned within this industry structure:
 - **Competitive strategy:** Cost leadership, differentiation, or focus/niche. Provide evidence from pricing, margins, and product positioning.
 - **Revenue growth vs industry:** Compare the company's revenue growth rate against the overall industry growth rate to assess share gain or loss.
 - **Margin comparison:** Compare gross and operating margins against the top 3-5 peers to gauge relative efficiency and pricing power.
-- **Competitive response capability:** Assess the company's ability to respond to competitive threats based on balance sheet strength, R&D investment, and management track record.
+- **Competitive response capability:** Assess the company's ability to respond to competitive threats based on balance sheet strength (cash reserves, debt capacity), R&D investment intensity, marketing spend, and management track record in responding to past competitive challenges.
+- **Value chain position:** Identify where the company sits in the industry value chain and whether it captures a disproportionate share of industry profits. Some positions (e.g., platform operators, standards setters) capture more value than others (e.g., commodity component suppliers).
+- **Innovation posture:** Evaluate whether the company is an innovation leader or fast follower. Compare R&D spending as a percentage of revenue against peers and assess the track record of translating R&D into commercially successful products or services.
 
 Present a peer comparison table:
 
@@ -123,12 +127,14 @@ Present a peer comparison table:
 
 ### Step 4 — Identify Competitive Risks and Opportunities
 
-- **Disruption risk:** Emerging technologies, business model innovations, or new entrants that could reshape the industry within 3-5 years.
-- **Consolidation potential:** Whether M&A activity is likely to change the competitive landscape.
-- **Regulatory shifts:** Upcoming regulations that could advantage or disadvantage specific competitors.
-- **Geographic expansion:** Opportunities or threats from international competitors or market expansion.
+- **Disruption risk:** Emerging technologies, business model innovations, or new entrants that could reshape the industry within 3-5 years. Assess whether the target company is positioned to benefit from or be harmed by these disruptions.
+- **Consolidation potential:** Whether M&A activity is likely to change the competitive landscape. Identify potential acquirers and targets, and assess whether consolidation would strengthen or weaken the target company's position.
+- **Regulatory shifts:** Upcoming regulations that could advantage or disadvantage specific competitors. Consider antitrust scrutiny, environmental regulations, data privacy rules, and sector-specific policy changes.
+- **Geographic expansion:** Opportunities or threats from international competitors entering the company's markets, or the company's ability to expand into new geographic regions.
+- **Technology platform shifts:** Assess whether shifts in underlying technology platforms (cloud computing, AI, mobile, electrification) could alter competitive dynamics and whether the company is investing appropriately in these transitions.
+- **Talent competition:** In knowledge-intensive industries, evaluate whether the company can attract and retain top talent relative to competitors, as this can be a leading indicator of future competitive position.
 
-Summarize with an overall competitive position assessment: Strong, Moderate, or Weak, with a brief justification.
+Summarize with an overall competitive position assessment: Strong, Moderate, or Weak, with a brief justification that ties back to the Five Forces analysis and peer comparison.
 
 ## Depth Handling
 

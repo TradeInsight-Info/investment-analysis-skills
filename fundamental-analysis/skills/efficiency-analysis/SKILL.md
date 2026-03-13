@@ -128,22 +128,32 @@ Present a multi-year table:
 | CapEx/Revenue (%) | | | | | |
 | CapEx/Depreciation (x) | | | | | |
 
-### Step 4 — Identify Trends and Anomalies
+### Step 4 — Peer Benchmarking
+
+When possible, compare the company's efficiency metrics against 2-3 direct competitors or the sector median:
+
+- Use WebSearch to find industry-average CCC, asset turnover, and per-employee metrics for the relevant sector.
+- Identify where the company ranks relative to peers: top quartile, average, or below average.
+- Note whether efficiency gaps are structural (different business model) or operational (execution differences within similar models). For example, a company with higher DSO than peers in the same industry may have weaker credit policies or a different customer mix.
+
+### Step 5 — Identify Trends and Anomalies
 
 Examine multi-year trends across all computed metrics:
 
-- Flag any metric that has deteriorated for two or more consecutive years.
-- Identify any sharp year-over-year changes (e.g., DSO spiking 20%+ in one year) and investigate potential causes such as acquisitions, accounting changes, or customer concentration issues.
+- Flag any metric that has deteriorated for two or more consecutive years, as this often signals a developing operational issue.
+- Identify any sharp year-over-year changes (e.g., DSO spiking 20%+ in one year) and investigate potential causes such as acquisitions that brought different receivable profiles, accounting policy changes, revenue recognition shifts, or customer concentration issues.
 - Compare the most recent year to the 5-year average to identify whether current performance is above or below the company's own historical norm.
+- Check whether receivables are growing faster than revenue (potential collection issues), whether inventory is growing faster than cost of goods sold (potential obsolescence risk), and whether payables are growing faster than purchases (potential supplier relationship strain or strategic extension of terms).
 
-### Step 5 — Synthesize Efficiency Assessment
+### Step 6 — Synthesize Efficiency Assessment
 
 Provide an overall efficiency characterization:
 
-- Classify the company's working capital management (excellent, good, average, or poor) based on CCC trends and absolute levels relative to peers.
-- Assess capital allocation efficiency: is the company investing sufficiently to sustain growth without over-investing?
-- Identify the single most notable efficiency strength and weakness.
-- Note any red flags (e.g., receivables growing faster than revenue, inventory buildup, CapEx persistently below depreciation).
+- Classify the company's working capital management as **Excellent** (negative or improving CCC, top-quartile turnover), **Good** (stable CCC, in-line with peers), **Average** (CCC near sector median with no clear trend), or **Poor** (deteriorating CCC, below-peer turnover ratios) based on CCC trends and absolute levels.
+- Assess capital allocation efficiency: is the company investing sufficiently to sustain growth without over-investing? A CapEx/Depreciation ratio persistently above 2.0 warrants scrutiny for potential overinvestment, while persistently below 0.8 warrants scrutiny for potential underinvestment.
+- Identify the single most notable efficiency strength and the single most notable efficiency weakness, with specific numbers to support each.
+- Note any red flags that warrant further investigation, such as receivables growing faster than revenue, inventory buildup without corresponding revenue growth, CapEx persistently below depreciation, or a CCC that has expanded by more than 10 days over the last 3 years.
+- Provide a concise one-sentence efficiency thesis summarizing the operational quality of the business.
 
 ## Depth Handling
 
