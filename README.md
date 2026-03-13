@@ -10,7 +10,7 @@ Comprehensive fundamental analysis covering financial statements, valuation, moa
 **Install:**
 
 ```bash
-npx skills add https://github.com/TradeInsight-info/investment-analysis-skills --skill {skill-name}
+npx skills add https://github.com/TradeInsight-info/investment-analysis-skills
 ```
 
 For Claude:
