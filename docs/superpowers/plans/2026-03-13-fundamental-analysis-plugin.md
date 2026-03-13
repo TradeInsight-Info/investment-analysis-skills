@@ -11,6 +11,7 @@
 **Spec:** `docs/superpowers/specs/2026-03-13-fundamental-analysis-plugin-design.md`
 
 **Conventions:**
+
 - **Auto-discovery**: Claude Code auto-discovers skills in `skills/` (by finding `SKILL.md` files) and agents in `agents/` (by finding `.md` files). No explicit registration in `plugin.json` is needed.
 - **Skill type field**: Auto-triggered skills omit the `type` field in frontmatter (auto-triggered is the default). Only user-invocable slash command skills include `type: user-invocable`.
 - **Shared references**: All skills reference shared data-fetching and output-format instructions via: `Consult ${CLAUDE_PLUGIN_ROOT}/skills/_shared/references/data-sources.md for data fetching instructions` and `Consult ${CLAUDE_PLUGIN_ROOT}/skills/_shared/references/output-format.md for output structure`. `${CLAUDE_PLUGIN_ROOT}` is resolved at runtime by Claude Code to the plugin's install directory.
@@ -24,6 +25,7 @@
 ### Task 1: Create plugin manifest and directory structure
 
 **Files:**
+
 - Create: `fundamental-analysis/.claude-plugin/plugin.json`
 
 - [ ] **Step 1: Create directory structure**
@@ -61,6 +63,7 @@ git commit -m "feat: scaffold fundamental-analysis plugin structure"
 All analysis skills need to know how to fetch data from SEC EDGAR and Stock Analysis. Create a shared reference file to avoid duplicating these instructions across 19 skills.
 
 **Files:**
+
 - Create: `fundamental-analysis/skills/_shared/references/data-sources.md`
 - Create: `fundamental-analysis/skills/_shared/references/output-format.md`
 
@@ -107,6 +110,7 @@ git commit -m "feat: add shared data source and output format references"
 ### Task 3: Create income-statement-analysis skill
 
 **Files:**
+
 - Create: `fundamental-analysis/skills/income-statement-analysis/SKILL.md`
 
 - [ ] **Step 1: Create skill directory**
@@ -120,6 +124,7 @@ mkdir -p fundamental-analysis/skills/income-statement-analysis
 Create `fundamental-analysis/skills/income-statement-analysis/SKILL.md` with:
 
 **Frontmatter:**
+
 ```yaml
 ---
 name: income-statement-analysis
@@ -161,6 +166,7 @@ git commit -m "feat: add income-statement-analysis skill"
 ### Task 4: Create balance-sheet-analysis skill
 
 **Files:**
+
 - Create: `fundamental-analysis/skills/balance-sheet-analysis/SKILL.md`
 
 - [ ] **Step 1: Create skill directory and write SKILL.md**
@@ -170,6 +176,7 @@ mkdir -p fundamental-analysis/skills/balance-sheet-analysis
 ```
 
 **Frontmatter:**
+
 ```yaml
 ---
 name: balance-sheet-analysis
@@ -183,6 +190,7 @@ description: >
 ```
 
 **Body:** Follow same structure as Task 3 but covering:
+
 - Current/non-current assets breakdown (cash, receivables, inventory, PP&E, goodwill, intangibles)
 - Current/non-current liabilities breakdown (payables, short/long-term debt, deferred revenue)
 - Shareholders' equity (common stock, retained earnings, AOCI, treasury stock)
@@ -202,6 +210,7 @@ git commit -m "feat: add balance-sheet-analysis skill"
 ### Task 5: Create cash-flow-analysis skill
 
 **Files:**
+
 - Create: `fundamental-analysis/skills/cash-flow-analysis/SKILL.md`
 
 - [ ] **Step 1: Create skill directory and write SKILL.md**
@@ -211,6 +220,7 @@ mkdir -p fundamental-analysis/skills/cash-flow-analysis
 ```
 
 **Frontmatter:**
+
 ```yaml
 ---
 name: cash-flow-analysis
@@ -224,6 +234,7 @@ description: >
 ```
 
 **Body:** Cover:
+
 - Operating activities: OCF, D&A, stock-based compensation, working capital changes, OCF margin, OCF-to-net-income ratio (quality of earnings)
 - Investing activities: CapEx, acquisitions, investment purchases/proceeds
 - Financing activities: debt issuance/repayment, buybacks, dividends paid
@@ -243,6 +254,7 @@ git commit -m "feat: add cash-flow-analysis skill"
 ### Task 6: Create profitability-analysis skill
 
 **Files:**
+
 - Create: `fundamental-analysis/skills/profitability-analysis/SKILL.md`
 
 - [ ] **Step 1: Create skill directory and write SKILL.md**
@@ -252,6 +264,7 @@ mkdir -p fundamental-analysis/skills/profitability-analysis
 ```
 
 **Frontmatter:**
+
 ```yaml
 ---
 name: profitability-analysis
@@ -264,6 +277,7 @@ description: >
 ```
 
 **Body:** Cover:
+
 - Margin hierarchy (gross/operating/EBITDA/net/FCF margins) with multi-year trends
 - Return metrics: ROE, ROA, ROIC, ROCE, ROTE
 - DuPont decomposition of ROE: Net Margin × Asset Turnover × Equity Multiplier — identify whether profitability, efficiency, or leverage is driving ROE
@@ -283,6 +297,7 @@ git commit -m "feat: add profitability-analysis skill"
 ### Task 7: Create valuation-analysis skill
 
 **Files:**
+
 - Create: `fundamental-analysis/skills/valuation-analysis/SKILL.md`
 
 - [ ] **Step 1: Create skill directory and write SKILL.md**
@@ -292,6 +307,7 @@ mkdir -p fundamental-analysis/skills/valuation-analysis
 ```
 
 **Frontmatter:**
+
 ```yaml
 ---
 name: valuation-analysis
@@ -306,6 +322,7 @@ description: >
 ```
 
 **Body:** Cover:
+
 - Earnings-based: P/E (TTM), Forward P/E, PEG, normalized P/E
 - Cash flow-based: P/FCF, EV/EBITDA, EV/EBIT, EV/FCF, EV/Revenue
 - Book value-based: P/B, P/Tangible Book
@@ -329,6 +346,7 @@ git commit -m "feat: add valuation-analysis skill"
 ### Task 8: Create financial-health skill
 
 **Files:**
+
 - Create: `fundamental-analysis/skills/financial-health/SKILL.md`
 
 - [ ] **Step 1: Create skill directory and write SKILL.md**
@@ -338,6 +356,7 @@ mkdir -p fundamental-analysis/skills/financial-health
 ```
 
 **Frontmatter:**
+
 ```yaml
 ---
 name: financial-health
@@ -351,6 +370,7 @@ description: >
 ```
 
 **Body:** Cover:
+
 - Liquidity: current ratio, quick ratio, cash ratio, OCF ratio
 - Solvency: D/E, debt-to-EBITDA, net debt-to-EBITDA, interest coverage, fixed charge coverage, debt-to-assets
 - Credit quality signals: debt maturity schedule (from 10-K footnotes), covenant risk, unfunded pension obligations
@@ -379,6 +399,7 @@ git commit -m "feat: complete Tier 1 core financial analysis skills (6 skills)"
 ### Task 9: Create growth-analysis skill
 
 **Files:**
+
 - Create: `fundamental-analysis/skills/growth-analysis/SKILL.md`
 
 - [ ] **Step 1: Create skill directory and write SKILL.md**
@@ -388,6 +409,7 @@ mkdir -p fundamental-analysis/skills/growth-analysis
 ```
 
 **Frontmatter:**
+
 ```yaml
 ---
 name: growth-analysis
@@ -401,6 +423,7 @@ description: >
 ```
 
 **Body:** Cover:
+
 - Historical CAGRs (1/3/5/10yr) for: revenue, gross profit, operating income, net income, EPS, FCF, dividends
 - Growth quality: organic vs acquisition-driven, volume vs price/mix, geographic decomposition, segment-level
 - Forward-looking: consensus revenue/EPS growth estimates (from Stock Analysis `/forecast/`), management guidance, long-term growth rate
@@ -419,6 +442,7 @@ git commit -m "feat: add growth-analysis skill"
 ### Task 10: Create efficiency-analysis skill
 
 **Files:**
+
 - Create: `fundamental-analysis/skills/efficiency-analysis/SKILL.md`
 
 - [ ] **Step 1: Create skill directory and write SKILL.md**
@@ -428,6 +452,7 @@ mkdir -p fundamental-analysis/skills/efficiency-analysis
 ```
 
 **Frontmatter:**
+
 ```yaml
 ---
 name: efficiency-analysis
@@ -441,6 +466,7 @@ description: >
 ```
 
 **Body:** Cover:
+
 - Asset turnover (total and fixed), receivables turnover, inventory turnover
 - Working capital efficiency: DSO, DIO, DPO, cash conversion cycle (CCC = DSO + DIO - DPO), interpretation (negative CCC = competitive advantage)
 - Capital efficiency: revenue per employee, EBITDA per employee, CapEx/revenue trend, CapEx/depreciation ratio
@@ -459,6 +485,7 @@ git commit -m "feat: add efficiency-analysis skill"
 ### Task 11: Create dividend-analysis skill
 
 **Files:**
+
 - Create: `fundamental-analysis/skills/dividend-analysis/SKILL.md`
 
 - [ ] **Step 1: Create skill directory and write SKILL.md**
@@ -468,6 +495,7 @@ mkdir -p fundamental-analysis/skills/dividend-analysis
 ```
 
 **Frontmatter:**
+
 ```yaml
 ---
 name: dividend-analysis
@@ -480,6 +508,7 @@ description: >
 ```
 
 **Body:** Cover:
+
 - Dividend per share (annual/quarterly), dividend yield, growth rate CAGRs (1/3/5/10yr)
 - Payout ratios: earnings-based and FCF-based (more reliable)
 - Consecutive growth years (Aristocrat = 25+, King = 50+)
@@ -500,6 +529,7 @@ git commit -m "feat: add dividend-analysis skill"
 ### Task 12: Create analyst-estimates skill
 
 **Files:**
+
 - Create: `fundamental-analysis/skills/analyst-estimates/SKILL.md`
 
 - [ ] **Step 1: Create skill directory and write SKILL.md**
@@ -509,6 +539,7 @@ mkdir -p fundamental-analysis/skills/analyst-estimates
 ```
 
 **Frontmatter:**
+
 ```yaml
 ---
 name: analyst-estimates
@@ -522,6 +553,7 @@ description: >
 ```
 
 **Body:** Cover:
+
 - Consensus estimates: revenue and EPS for current quarter, next quarter, current year, next year
 - High/low/mean estimates, number of covering analysts
 - Price targets: high, low, average, median
@@ -544,6 +576,7 @@ git commit -m "feat: add analyst-estimates skill"
 ### Task 13: Create moat-analysis skill
 
 **Files:**
+
 - Create: `fundamental-analysis/skills/moat-analysis/SKILL.md`
 
 - [ ] **Step 1: Create skill directory and write SKILL.md**
@@ -553,6 +586,7 @@ mkdir -p fundamental-analysis/skills/moat-analysis
 ```
 
 **Frontmatter:**
+
 ```yaml
 ---
 name: moat-analysis
@@ -566,6 +600,7 @@ description: >
 ```
 
 **Body:** Cover:
+
 - Moat sources (Morningstar framework): intangible assets (brands, patents, licenses), switching costs, network effects, cost advantages (scale, proprietary processes), efficient scale
 - Quantitative moat signals: ROIC consistently above WACC for 5-10+ years, stable/expanding gross margins, pricing power evidence, market share trend
 - Assessment framework: identify which moat sources apply, rate durability
@@ -584,6 +619,7 @@ git commit -m "feat: add moat-analysis skill"
 ### Task 14: Create competitive-position skill
 
 **Files:**
+
 - Create: `fundamental-analysis/skills/competitive-position/SKILL.md`
 
 - [ ] **Step 1: Create skill directory and write SKILL.md**
@@ -593,6 +629,7 @@ mkdir -p fundamental-analysis/skills/competitive-position
 ```
 
 **Frontmatter:**
+
 ```yaml
 ---
 name: competitive-position
@@ -606,6 +643,7 @@ description: >
 ```
 
 **Body:** Cover:
+
 - Porter's Five Forces assessment: competitive rivalry, threat of new entrants, threat of substitutes, buyer power, supplier power
 - Market share trends and competitive response analysis
 - Industry context: concentration (oligopoly vs fragmented), regulatory environment, technology disruption risk, capital intensity
@@ -626,6 +664,7 @@ git commit -m "feat: add competitive-position skill"
 ### Task 15: Create insider-activity skill
 
 **Files:**
+
 - Create: `fundamental-analysis/skills/insider-activity/SKILL.md`
 
 - [ ] **Step 1: Create skill directory and write SKILL.md**
@@ -635,6 +674,7 @@ mkdir -p fundamental-analysis/skills/insider-activity
 ```
 
 **Frontmatter:**
+
 ```yaml
 ---
 name: insider-activity
@@ -648,6 +688,7 @@ description: >
 ```
 
 **Body:** Cover:
+
 - Insider ownership percentage and insider buying vs selling trends (SEC Form 4 filings)
 - Executive compensation structure (salary/equity/bonus from DEF 14A proxy)
 - Capital allocation track record: M&A history, buyback timing quality, dividend policy consistency
@@ -668,6 +709,7 @@ git commit -m "feat: add insider-activity skill"
 ### Task 16: Create risk-assessment skill
 
 **Files:**
+
 - Create: `fundamental-analysis/skills/risk-assessment/SKILL.md`
 
 - [ ] **Step 1: Create skill directory and write SKILL.md**
@@ -677,6 +719,7 @@ mkdir -p fundamental-analysis/skills/risk-assessment
 ```
 
 **Frontmatter:**
+
 ```yaml
 ---
 name: risk-assessment
@@ -690,6 +733,7 @@ description: >
 ```
 
 **Body:** Cover:
+
 - Business risks: customer/product/geographic concentration, technology obsolescence, key-person dependency, litigation/legal exposure, IP protection
 - Financial risks: leverage risk, refinancing risk (debt maturity wall), pension underfunding, off-balance-sheet obligations
 - Macro risks: FX headwinds, tariff/trade exposure, interest rate sensitivity, inflation impact on input costs
@@ -711,6 +755,7 @@ git commit -m "feat: add risk-assessment skill"
 ### Task 17: Create sec-filing-reader skill
 
 **Files:**
+
 - Create: `fundamental-analysis/skills/sec-filing-reader/SKILL.md`
 
 - [ ] **Step 1: Create skill directory and write SKILL.md**
@@ -720,6 +765,7 @@ mkdir -p fundamental-analysis/skills/sec-filing-reader
 ```
 
 **Frontmatter:**
+
 ```yaml
 ---
 name: sec-filing-reader
@@ -733,6 +779,7 @@ description: >
 ```
 
 **Body:** Cover:
+
 - Ticker-to-CIK resolution process
 - Filing lookup: use EFTS search endpoint to find specific filing types by ticker and date range
 - Filing retrieval: fetch the filing document HTML/text from the EDGAR filing URL
@@ -757,6 +804,7 @@ git commit -m "feat: add sec-filing-reader utility skill"
 ### Task 18: Create peer-comparison skill
 
 **Files:**
+
 - Create: `fundamental-analysis/skills/peer-comparison/SKILL.md`
 
 - [ ] **Step 1: Create skill directory and write SKILL.md**
@@ -766,6 +814,7 @@ mkdir -p fundamental-analysis/skills/peer-comparison
 ```
 
 **Frontmatter:**
+
 ```yaml
 ---
 name: peer-comparison
@@ -779,6 +828,7 @@ description: >
 ```
 
 **Body:** Cover:
+
 - Peer identification: use WebSearch to identify 3-5 closest public competitors in the same industry/sector
 - Metrics to compare (organized in a table): revenue, revenue growth, gross margin, operating margin, net margin, ROE, ROIC, P/E, EV/EBITDA, P/FCF, debt-to-equity, FCF margin, dividend yield
 - Data fetching: for each peer, fetch key metrics from Stock Analysis `/financials/ratios/` or SEC EDGAR frames endpoint (single metric across all companies)
@@ -797,6 +847,7 @@ git commit -m "feat: add peer-comparison utility skill"
 ### Task 19: Create cross-validation skill
 
 **Files:**
+
 - Create: `fundamental-analysis/skills/cross-validation/SKILL.md`
 
 - [ ] **Step 1: Create skill directory and write SKILL.md**
@@ -806,6 +857,7 @@ mkdir -p fundamental-analysis/skills/cross-validation
 ```
 
 **Frontmatter:**
+
 ```yaml
 ---
 name: cross-validation
@@ -819,6 +871,7 @@ description: >
 ```
 
 **Body:** Cover:
+
 - Purpose: verify key financial data points by comparing values across independent sources
 - Cross-validation rules:
   - If original data came from SEC EDGAR → cross-check against Stock Analysis
@@ -843,6 +896,7 @@ git commit -m "feat: add cross-validation utility skill"
 ### Task 20: Create fundamental-report skill
 
 **Files:**
+
 - Create: `fundamental-analysis/skills/fundamental-report/SKILL.md`
 
 - [ ] **Step 1: Create skill directory and write SKILL.md**
@@ -852,6 +906,7 @@ mkdir -p fundamental-analysis/skills/fundamental-report
 ```
 
 **Frontmatter:**
+
 ```yaml
 ---
 name: fundamental-report
@@ -866,14 +921,13 @@ type: user-invocable
 **Body:** This is the orchestration skill. Cover:
 
 1. **Ticker resolution (Step 0)**: Resolve ticker to CIK via `company_tickers.json`. Fetch company metadata (name, exchange, sector via Stock Analysis or SIC code). Pass to all parallel tasks.
-
 2. **Parallel dispatch**: Launch the following as parallel subagents (using Agent tool), each analyzing the resolved ticker:
+
    - income-statement-analysis, balance-sheet-analysis, cash-flow-analysis, profitability-analysis, valuation-analysis, financial-health, growth-analysis, efficiency-analysis, dividend-analysis, analyst-estimates, moat-analysis, competitive-position, insider-activity, risk-assessment, peer-comparison, sec-filing-reader (10-K summary)
    - Also dispatch signal-rater agent
-
 3. **Sequential post-step**: After all parallel results collected, invoke cross-validation to verify key data points across sources.
-
 4. **Report assembly** — compile results into this structure:
+
    - **Key Metrics Summary**: quick-reference table (Price, Market Cap, P/E, Forward P/E, EV/EBITDA, P/FCF, Revenue Growth, EPS Growth, ROE, ROIC, Gross Margin, Net Margin, Debt/Equity, Current Ratio, FCF Yield, Dividend Yield, TipRanks SmartScore, Overall Signal)
    - **Signal Rating**: aggregated Buy/Hold/Sell with per-source breakdown
    - **Detailed Analysis**: all skill results organized Tier 1 → Tier 2 → Tier 3, at **summary depth** (key metrics + brief interpretation per area)
@@ -882,7 +936,6 @@ type: user-invocable
    - **Reasons to Avoid**: 3-5 bear case arguments derived from the analysis
    - **Source Links**: all URLs referenced, grouped by source
    - **Disclaimer**
-
 5. All analysis at summary depth: key metrics + 1-2 sentence interpretation per area.
 
 - [ ] **Step 2: Commit**
@@ -897,6 +950,7 @@ git commit -m "feat: add fundamental-report slash command skill"
 ### Task 21: Create fundamental-report-detailed skill
 
 **Files:**
+
 - Create: `fundamental-analysis/skills/fundamental-report-detailed/SKILL.md`
 
 - [ ] **Step 1: Create skill directory and write SKILL.md**
@@ -906,6 +960,7 @@ mkdir -p fundamental-analysis/skills/fundamental-report-detailed
 ```
 
 **Frontmatter:**
+
 ```yaml
 ---
 name: fundamental-report-detailed
@@ -919,6 +974,7 @@ type: user-invocable
 ```
 
 **Body:** Same orchestration as Task 20 but with one key difference:
+
 - All analysis at **detailed depth**: full multi-year data tables, trend analysis, extended commentary per area
 - Note this in the dispatch instructions: each skill should provide detailed output
 - Otherwise identical report structure
@@ -937,6 +993,7 @@ git commit -m "feat: add fundamental-report-detailed slash command skill"
 ### Task 22: Create fundamental-analyst agent
 
 **Files:**
+
 - Create: `fundamental-analysis/agents/fundamental-analyst.md`
 
 - [ ] **Step 1: Write agent file**
@@ -944,6 +1001,7 @@ git commit -m "feat: add fundamental-report-detailed slash command skill"
 Create `fundamental-analysis/agents/fundamental-analyst.md`:
 
 **Frontmatter:**
+
 ```yaml
 ---
 name: fundamental-analyst
@@ -1032,6 +1090,7 @@ git commit -m "feat: add fundamental-analyst orchestrator agent"
 ### Task 23: Create signal-rater agent
 
 **Files:**
+
 - Create: `fundamental-analysis/agents/signal-rater.md`
 
 - [ ] **Step 1: Write agent file**
@@ -1039,6 +1098,7 @@ git commit -m "feat: add fundamental-analyst orchestrator agent"
 Create `fundamental-analysis/agents/signal-rater.md`:
 
 **Frontmatter:**
+
 ```yaml
 ---
 name: signal-rater
@@ -1138,14 +1198,15 @@ git commit -m "feat: complete fundamental-analysis plugin — 19 skills, 2 agent
 
 ## Summary
 
-| Chunk | Tasks | Components |
-|-------|-------|------------|
-| 1: Scaffold | 1-2 | Plugin manifest, shared references |
-| 2: Tier 1 | 3-8 | 6 core financial skills |
-| 3: Tier 2 | 9-12 | 4 growth & returns skills |
-| 4: Tier 3 | 13-16 | 4 qualitative skills |
-| 5: Utility | 17-19 | 3 utility skills |
-| 6: Slash Commands | 20-21 | 2 report orchestration skills |
-| 7: Agents | 22-23 | 2 agents (fundamental-analyst, signal-rater) |
+
+| Chunk             | Tasks | Components                                   |
+| ------------------- | ------- | ---------------------------------------------- |
+| 1: Scaffold       | 1-2   | Plugin manifest, shared references           |
+| 2: Tier 1         | 3-8   | 6 core financial skills                      |
+| 3: Tier 2         | 9-12  | 4 growth & returns skills                    |
+| 4: Tier 3         | 13-16 | 4 qualitative skills                         |
+| 5: Utility        | 17-19 | 3 utility skills                             |
+| 6: Slash Commands | 20-21 | 2 report orchestration skills                |
+| 7: Agents         | 22-23 | 2 agents (fundamental-analyst, signal-rater) |
 
 **Total: 23 tasks, 19 skills, 2 agents, 2 shared reference files**
