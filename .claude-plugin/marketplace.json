@@ -58,7 +58,8 @@
         "./skills/risk-assessment",
         "./skills/peer-comparison",
         "./skills/sec-filing-reader",
-        "./skills/cross-validation"
+        "./skills/cross-validation",
+        "./skills/sec-fetch"
       ]
     }
   ]

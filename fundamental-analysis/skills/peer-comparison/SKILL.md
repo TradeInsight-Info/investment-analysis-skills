@@ -19,7 +19,7 @@ Consult `${CLAUDE_PLUGIN_ROOT}/skills/_shared/references/data-sources.md` for fu
 
 ### Peer Identification
 
-1. **Determine the target company.** Resolve the ticker to a CIK by fetching `https://www.sec.gov/files/company_tickers.json` via WebFetch. Cache the CIK and official company name.
+1. **Determine the target company.** Resolve the ticker to a CIK by fetching `https://www.sec.gov/files/company_tickers.json` using the `sec-fetch` skill (see `data-sources.md`). Cache the CIK and official company name.
 
 2. **Identify peers.** If the user explicitly provides a list of comparison companies, use those. Otherwise, identify three to five closest public competitors through the following process:
    - Use WebSearch to query "{company name} competitors publicly traded" or "{company name} peer companies stock market."

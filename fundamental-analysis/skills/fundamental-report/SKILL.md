@@ -19,12 +19,14 @@ Generate a comprehensive fundamental analysis research note for a publicly trade
 
 Before dispatching parallel tasks, resolve the ticker:
 
-1. Fetch the company ticker-to-CIK mapping via WebFetch from `https://www.sec.gov/files/company_tickers.json`
+1. Fetch the company ticker-to-CIK mapping from `https://www.sec.gov/files/company_tickers.json` using the `sec-fetch` skill (it handles SEC credentials and User-Agent automatically — see `data-sources.md`)
 2. Find the CIK for the given ticker and pad to 10 digits
-3. Fetch company overview from `https://stockanalysis.com/stocks/{ticker}/` to get current price, market cap, sector, and exchange
+3. Fetch company overview from `https://stockanalysis.com/stocks/{ticker}/` via WebFetch to get current price, market cap, sector, and exchange
 4. Store resolved metadata: CIK, company name, sector, exchange, current price, market cap
 
 If the ticker is not found in EDGAR (international company), note this and proceed with Stock Analysis and WebSearch only.
+
+**Important:** For ALL SEC EDGAR fetches (`data.sec.gov`, `efts.sec.gov`, `www.sec.gov`), use the `sec-fetch` skill — never WebFetch.
 
 ### Step 1: Parallel Dispatch
 

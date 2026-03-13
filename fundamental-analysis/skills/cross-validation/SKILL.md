@@ -25,7 +25,7 @@ Consult `${CLAUDE_PLUGIN_ROOT}/skills/_shared/references/data-sources.md` for fu
    - If the original data came from **Gurufocus**, validate against **SEC EDGAR** as the cross-check source.
    - If the original source is unknown or the user simply requests validation, fetch from both SEC EDGAR and Stock Analysis independently and compare.
 
-2. **Resolve the ticker.** Fetch `https://www.sec.gov/files/company_tickers.json` via WebFetch, locate the company's CIK, and pad it to 10 digits. Cache the CIK and official company name.
+2. **Resolve the ticker.** Fetch `https://www.sec.gov/files/company_tickers.json` using the `sec-fetch` skill (see `data-sources.md`), locate the company's CIK, and pad it to 10 digits. Cache the CIK and official company name.
 
 ### Fetching Source A — SEC EDGAR XBRL API
 

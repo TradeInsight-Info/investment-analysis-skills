@@ -19,7 +19,7 @@ Consult `${CLAUDE_PLUGIN_ROOT}/skills/_shared/references/data-sources.md` for fu
 
 ### Ticker-to-CIK Resolution
 
-1. **Resolve the ticker.** Fetch `https://www.sec.gov/files/company_tickers.json` via WebFetch, locate the company's CIK, and pad it to 10 digits. Cache the CIK and official company name for subsequent requests. If the user provides a company name instead of a ticker, search the JSON for a matching `title` field and confirm the match with the user before proceeding.
+1. **Resolve the ticker.** Fetch `https://www.sec.gov/files/company_tickers.json` using the `sec-fetch` skill (see `data-sources.md`), locate the company's CIK, and pad it to 10 digits. Cache the CIK and official company name for subsequent requests. If the user provides a company name instead of a ticker, search the JSON for a matching `title` field and confirm the match with the user before proceeding.
 
 2. **Handle ambiguity.** If multiple CIK entries match (e.g., different share classes), prefer the entry with the most common ticker symbol. If the user specifies an insider name rather than a company, use the EDGAR full-text search endpoint with the person's name as the query and `Form 4` as the form type.
 

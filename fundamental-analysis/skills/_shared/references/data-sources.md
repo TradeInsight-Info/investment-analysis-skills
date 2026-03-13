@@ -2,11 +2,25 @@
 
 Standard data-fetching instructions for all fundamental analysis skills. Consult this reference to determine which sources to use and how to fetch data.
 
+## Fetching SEC EDGAR Data
+
+**NEVER use WebFetch for SEC domains** (`www.sec.gov`, `data.sec.gov`, `efts.sec.gov`) — it will return HTTP 403. SEC requires a `User-Agent` header with the user's name and email (regulatory requirement).
+
+**Always use the `sec-fetch` skill** for any SEC EDGAR URL. The skill automatically:
+1. Reads credentials from `${CLAUDE_PLUGIN_ROOT}/config.json` if they exist
+2. Prompts the user for name + email if not configured, then saves to `config.json`
+3. Fetches the URL via `${CLAUDE_PLUGIN_ROOT}/skills/sec-fetch/scripts/sec-fetch.sh` with the proper `User-Agent` header
+
+To invoke: follow the `sec-fetch` skill process — read `config.json`, then call:
+```bash
+bash ${CLAUDE_PLUGIN_ROOT}/skills/sec-fetch/scripts/sec-fetch.sh "<url>" "<sec.user>" "<sec.email>"
+```
+
 ## Ticker Resolution
 
 Before fetching any financial data, resolve the company ticker to a CIK (Central Index Key) for SEC EDGAR access:
 
-1. Fetch `https://www.sec.gov/files/company_tickers.json` via WebFetch
+1. Fetch `https://www.sec.gov/files/company_tickers.json` using the `sec-fetch` skill
 2. Search the JSON for the ticker symbol to find the 10-digit CIK
 3. Pad CIK with leading zeros to 10 digits (e.g., `320193` → `CIK0000320193`)
 4. Cache the CIK and company name for use across all data fetches
@@ -15,7 +29,7 @@ If the ticker is not found (international company), skip EDGAR sources and rely 
 
 ## SEC EDGAR XBRL API (Primary Source)
 
-No API key required. Include a `User-Agent` header with a contact email (SEC requirement).
+No API key required. The `sec-fetch` skill handles the required `User-Agent` header automatically.
 
 ### Company Financial Data (Structured JSON)
 

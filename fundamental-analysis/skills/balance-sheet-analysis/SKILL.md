@@ -17,7 +17,7 @@ Analyze a company's balance sheet to evaluate its financial position at a point 
 
 Consult `${CLAUDE_PLUGIN_ROOT}/skills/_shared/references/data-sources.md` for full source details and fallback behavior.
 
-1. **Resolve the ticker.** Fetch `https://www.sec.gov/files/company_tickers.json` via WebFetch, locate the company's CIK, and pad it to 10 digits. Cache the CIK and official company name.
+1. **Resolve the ticker.** Fetch `https://www.sec.gov/files/company_tickers.json` using the `sec-fetch` skill (see `data-sources.md`), locate the company's CIK, and pad it to 10 digits. Cache the CIK and official company name.
 
 2. **Fetch structured financial data (primary).** Request the SEC EDGAR XBRL company facts endpoint:
    ```
