@@ -24,7 +24,8 @@ The backbone for structured financial data. No API key required (just a `User-Ag
 | `https://www.sec.gov/files/company_tickers.json` | Ticker-to-CIK lookup |
 | `https://data.sec.gov/api/xbrl/companyfacts/CIK{10-digit-CIK}.json` | All financial data for one company (structured JSON) |
 | `https://data.sec.gov/api/xbrl/frames/us-gaap/{concept}/{unit}/CY{year}.json` | Single metric across all companies (for peer comparison) |
-| `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK={ticker}&type={form-type}` | Filing index lookup |
+| `https://efts.sec.gov/LATEST/search-index?q={query}&forms={form-type}&dateRange=custom&startdt=YYYY-MM-DD&enddt=YYYY-MM-DD` | Full-text filing search (preferred) |
+| `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK={ticker}&type={form-type}` | Legacy filing index lookup (deprecated — use EFTS above when possible) |
 
 Filing types: 10-K (annual), 10-Q (quarterly), 8-K (material events), DEF 14A (proxy/governance), Form 4 (insider transactions), S-1 (IPO).
 
@@ -70,6 +71,8 @@ Append `?p=quarterly` for quarterly data.
 - **Earnings call transcripts** are largely paywalled — rely on WebSearch for summaries
 - **International companies** may lack EDGAR filings — fall back to Stock Analysis and WebSearch
 - **TipRanks** may have limited fetchability — WebSearch as fallback for SmartScore data
+- **Stock Analysis** fetchability may degrade if they add bot blocking — monitor and fall back to Gurufocus + EDGAR
+- **SEC EDGAR rate limit**: 10 requests/second per User-Agent — see Orchestration section for throttling strategy
 
 ---
 
@@ -131,37 +134,48 @@ Concentration risks (customer/product/geographic), leverage risk, accounting qua
 - **REITs**: FFO, adjusted FFO, NAV, occupancy rate, cap rate
 - **Energy**: production volumes, reserve life, F&D costs, lifting cost/barrel
 
+**Sector detection**: The ticker resolution step (Step 0) identifies the company's sector from Stock Analysis or the SIC code in EDGAR filings. Relevant skills then include sector-specific metrics in their output when the sector matches.
+
 ---
 
 ## Skills
 
-### Auto-Triggered Skills (12)
+### Auto-Triggered Analysis Skills (11)
 
-Each fires based on description matching when the user asks a relevant question.
+Each fires based on description matching when the user asks a relevant question. These map to the 14 analysis coverage areas (some areas are combined within skills).
 
-| Skill File | Trigger Description |
-|---|---|
-| `profitability-analysis.md` | User asks about margins, ROE, ROA, ROIC, profitability of a company |
-| `financial-health.md` | User asks about debt levels, liquidity, solvency, balance sheet strength |
-| `valuation-analysis.md` | User asks if a stock is overvalued/undervalued, P/E, EV/EBITDA, DCF |
-| `growth-analysis.md` | User asks about revenue/earnings growth, growth rates, forward estimates |
-| `efficiency-analysis.md` | User asks about working capital, cash conversion cycle, asset turnover |
-| `dividend-analysis.md` | User asks about dividends, yield, payout ratio, dividend safety |
-| `analyst-estimates.md` | User asks about price targets, analyst ratings, consensus estimates |
-| `risk-assessment.md` | User asks about risks, red flags, accounting quality of a company |
-| `competitive-position.md` | User asks about competitive advantage, market position, Porter's Five Forces |
-| `moat-analysis.md` | User asks about economic moat, moat durability, switching costs, network effects, ROIC vs WACC |
-| `insider-activity.md` | User asks about insider buying/selling, Form 4 filings |
-| `sec-filing-reader.md` | User asks to read/summarize a 10-K, 10-Q, proxy, or other SEC filing |
-| `peer-comparison.md` | User asks to compare a company against competitors or industry |
-| `cross-validation.md` | User asks to validate/cross-check financial data across multiple sources |
+| Skill File | Trigger Description | Coverage Areas |
+|---|---|---|
+| `profitability-analysis.md` | User asks about margins, ROE, ROA, ROIC, profitability of a company | #4 Profitability |
+| `financial-health.md` | User asks about debt levels, liquidity, solvency, balance sheet strength | #6 Financial Health |
+| `valuation-analysis.md` | User asks if a stock is overvalued/undervalued, P/E, EV/EBITDA, DCF | #5 Valuation |
+| `growth-analysis.md` | User asks about revenue/earnings growth, growth rates, forward estimates | #7 Growth |
+| `efficiency-analysis.md` | User asks about working capital, cash conversion cycle, asset turnover | #8 Efficiency |
+| `dividend-analysis.md` | User asks about dividends, yield, payout ratio, dividend safety | #9 Dividend |
+| `analyst-estimates.md` | User asks about price targets, analyst ratings, consensus estimates | #10 Analyst Estimates |
+| `risk-assessment.md` | User asks about risks, red flags, accounting quality of a company | #14 Risk Assessment |
+| `competitive-position.md` | User asks about competitive advantage, market position, Porter's Five Forces | #12 Competitive Position |
+| `moat-analysis.md` | User asks about economic moat, moat durability, switching costs, network effects, ROIC vs WACC | #11 Moat |
+| `insider-activity.md` | User asks about insider buying/selling, Form 4 filings | #13 Management & Governance (insider subset) |
+
+### Auto-Triggered Utility Skills (3)
+
+These are helper skills that don't map to a single analysis area. They are also auto-triggered but serve a different role.
+
+| Skill File | Trigger Description | Role |
+|---|---|---|
+| `sec-filing-reader.md` | User asks to read/summarize a 10-K, 10-Q, proxy, or other SEC filing | Utility — fetches and summarizes raw SEC filings on demand |
+| `peer-comparison.md` | User asks to compare a company against competitors or industry | Utility — pulls metrics from multiple analysis areas for side-by-side comparison |
+| `cross-validation.md` | User asks to validate/cross-check financial data across multiple sources | Utility — also invoked programmatically in report orchestration (sequential post-step) |
+
+Note: `cross-validation` has dual usage — it auto-triggers when users explicitly ask to verify data, and it is also invoked programmatically as the sequential post-step in the report orchestration flow.
 
 ### User-Invocable Skills (Slash Commands) (2)
 
 | Skill File | Command | Purpose |
 |---|---|---|
-| `fundamental-report.md` | `/fundamental-report {ticker}` | Full research note (summary depth) |
-| `fundamental-report-detailed.md` | `/fundamental-report-detailed {ticker}` | Comprehensive report (all 14 areas, detailed depth) |
+| `fundamental-report.md` | `/fundamental-report {ticker}` | Full research note covering all 14 areas at summary depth (key metrics + brief interpretation per area) |
+| `fundamental-report-detailed.md` | `/fundamental-report-detailed {ticker}` | Comprehensive report covering all 14 areas at detailed depth (full data tables, trend analysis, extended commentary) |
 
 ### Skill Output Format
 
@@ -182,12 +196,12 @@ Orchestrates skills for complex, multi-step fundamental analysis questions.
 - Dispatches relevant skills in parallel based on the user's question
 - Chains multiple data fetches across EDGAR and Stock Analysis
 - Produces structured output with source citations and disclaimers
-- Tools: `WebSearch`, `WebFetch`, `Read`, `Write`, `Bash`
+- Tools: `WebSearch`, `WebFetch`, `Read`, `Write`
 - Example triggers: "Do a full fundamental analysis of MSFT", "Compare META's financials to GOOG", "What are the strengths and weaknesses of NVDA?"
 
 ### signal-rating
 
-Aggregates Buy/Hold/Sell ratings from multiple sources and produces a synthesized overall rating.
+Aggregates Buy/Hold/Sell ratings from multiple sources and produces a synthesized overall rating. **Fully independent** — fetches all its own data; does not consume output from any parallel analysis skill.
 
 **Rating sources:**
 - TipRanks SmartScore (1-10 composite based on 8 factors)
@@ -266,27 +280,39 @@ The `fundamental-report` slash commands and the `fundamental-analyst` agent use 
 ```
 User triggers report
         │
-        ├── parallel ──┬─ profitability-analysis
-        │              ├─ financial-health
-        │              ├─ valuation-analysis
-        │              ├─ growth-analysis
-        │              ├─ efficiency-analysis
-        │              ├─ moat-analysis
-        │              ├─ dividend-analysis
-        │              ├─ analyst-estimates
-        │              ├─ risk-assessment
-        │              ├─ competitive-position
-        │              ├─ insider-activity
-        │              └─ signal-rating agent
+        ├─ Step 0: Ticker resolution (CIK lookup via company_tickers.json)
+        │
+        ├── parallel ──┬─ profitability-analysis      (areas #1-4)
+        │              ├─ financial-health             (area #6)
+        │              ├─ valuation-analysis            (area #5)
+        │              ├─ growth-analysis               (area #7)
+        │              ├─ efficiency-analysis           (area #8)
+        │              ├─ moat-analysis                 (area #11)
+        │              ├─ dividend-analysis             (area #9)
+        │              ├─ analyst-estimates             (area #10)
+        │              ├─ risk-assessment               (area #14)
+        │              ├─ competitive-position          (area #12)
+        │              ├─ insider-activity              (area #13)
+        │              ├─ peer-comparison               (cross-area)
+        │              ├─ sec-filing-reader             (10-K summary)
+        │              └─ signal-rating agent           (independent)
         │                        │
-        │              results collected
+        │              all 14 results collected
         │                        │
         └── sequential ─── cross-validation
                                  │
                           Final Report assembled
 ```
 
-All 12 analysis tasks run in parallel (independent data fetches). Cross-validation runs sequentially after all results are collected, since it needs to compare outputs against alternative sources.
+**Step 0 — Ticker Resolution**: Before the parallel fan-out, a shared pre-step resolves the ticker to a CIK number (via `company_tickers.json`) and caches company metadata (name, exchange, sector). This avoids redundant lookups across skills and handles edge cases (ambiguous tickers, delisted companies) in one place. The resolved CIK and metadata are passed to all parallel skills.
+
+**Parallel phase**: 13 analysis tasks + 1 agent = 14 parallel tasks. Each fetches its own data independently. The signal-rating agent does not consume output from any parallel skill.
+
+**Sequential phase**: Cross-validation runs after all results are collected, comparing key data points against alternative sources and flagging discrepancies.
+
+**SEC EDGAR throttling**: Skills sharing the same EDGAR session should stagger requests to stay under the 10-requests/second limit. In practice, since skills run as separate subagents with independent fetch timing, natural variance in execution provides sufficient staggering. If rate limiting is hit, skills should retry with exponential backoff.
+
+**Degradation**: If a primary source fails, skills fall back to the next source in the priority matrix and note the fallback in their output. The cross-validation step flags any areas where only one source was available.
 
 ---
 
