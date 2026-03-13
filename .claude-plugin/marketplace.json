@@ -1,0 +1,63 @@
+{
+  "name": "tradeinsight-marketplace",
+  "description": "A collection of agents and skills for investment analysis — fundamental, technical, and sentiment analysis of publicly traded companies.",
+  "author": {
+    "name": "TradeInsight.info",
+    "url": "https://github.com/TradeInsight-info"
+  },
+  "repository": "https://github.com/TradeInsight-info/investment-analysis-skills",
+  "plugins": [
+    {
+      "name": "fundamental-analysis",
+      "source": "./fundamental-analysis",
+      "description": "Comprehensive fundamental analysis of publicly traded companies — financial statements, valuation, moat analysis, signal ratings, and full research reports.",
+      "category": "finance",
+      "strict": false,
+      "keywords": [
+        "investing",
+        "fundamental-analysis",
+        "stocks",
+        "finance",
+        "SEC",
+        "valuation",
+        "earnings",
+        "moat"
+      ],
+      "tags": [
+        "investing",
+        "fundamental-analysis",
+        "stocks",
+        "finance",
+        "SEC",
+        "valuation",
+        "earnings",
+        "moat"
+      ],
+      "agents": [
+        "./agents/fundamental-analyst",
+        "./agents/signal-rater"
+      ],
+      "skills": [
+        "./skills/fundamental-report",
+        "./skills/fundamental-report-detailed",
+        "./skills/income-statement-analysis",
+        "./skills/balance-sheet-analysis",
+        "./skills/cash-flow-analysis",
+        "./skills/profitability-analysis",
+        "./skills/valuation-analysis",
+        "./skills/financial-health",
+        "./skills/growth-analysis",
+        "./skills/efficiency-analysis",
+        "./skills/dividend-analysis",
+        "./skills/analyst-estimates",
+        "./skills/moat-analysis",
+        "./skills/competitive-position",
+        "./skills/insider-activity",
+        "./skills/risk-assessment",
+        "./skills/peer-comparison",
+        "./skills/sec-filing-reader",
+        "./skills/cross-validation"
+      ]
+    }
+  ]
+}

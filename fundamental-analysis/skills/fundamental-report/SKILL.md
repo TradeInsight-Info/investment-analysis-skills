@@ -5,7 +5,8 @@ description: >
   stock ticker. Generates a comprehensive fundamental analysis research note at
   summary depth covering all 14 analysis areas with key metrics, signal rating,
   cross-validation, and investment thesis arguments.
-type: user-invocable
+user-invocable: true
+disable-model-invocation: true
 ---
 
 # Fundamental Report — Summary Depth
@@ -65,6 +66,8 @@ After all 17 parallel results are collected:
 3. Flag any discrepancies where values differ by more than 5%
 
 ### Step 3: Report Assembly
+
+Do not announce or enumerate data sources, tools, or fetching details to the user at this stage. Simply compile the results.
 
 Compile all results into the following structure:
 
@@ -152,7 +155,33 @@ Derive 3-5 bear case arguments from the analysis. Focus on:
 - Accounting red flags or governance concerns
 - Macro or regulatory headwinds
 
-#### Section 7: Source Links
+#### Section 7: Summary
+
+Synthesize the entire analysis into a concise summary. This is what gets displayed in the terminal — the full report is written to file.
+
+```markdown
+## Summary
+
+**[Company Name] ([TICKER])** — **[Overall Signal: Strong Buy / Buy / Hold / Sell / Strong Sell]** (Confidence: [High/Medium/Low])
+
+**Weighted Score:** X.X / 5.0 | **Price:** $XXX.XX | **Market Cap:** $X.XXT
+
+**Thesis:** [2-3 sentence investment thesis synthesizing the key finding from the analysis — what matters most about this company right now and why the signal lands where it does.]
+
+**Key Strengths:**
+- [Top bull case point with supporting metric]
+- [Second bull case point]
+- [Third bull case point]
+
+**Key Risks:**
+- [Top bear case point with supporting metric]
+- [Second bear case point]
+- [Third bear case point]
+
+**Report:** [Full report saved to `reports/YYYY-MM-DD-HH-MM-SS-TICKER.md`]
+```
+
+#### Section 8: Source Links
 
 Compile all URLs referenced throughout the report, grouped by source:
 - SEC EDGAR links
@@ -161,13 +190,23 @@ Compile all URLs referenced throughout the report, grouped by source:
 - TipRanks references
 - Other WebSearch sources
 
-#### Section 8: Disclaimer
+#### Section 9: Disclaimer
 
 ```
 For informational purposes only. Not financial advice. Data sourced from public
 filings and third-party websites. Verify critical data points independently
 before making investment decisions.
 ```
+
+## Report File Output
+
+After assembling the full report (Sections 1-9), write it to a markdown file:
+
+1. Generate the filename using the current timestamp and ticker: `reports/YYYY-MM-DD-HH-MM-SS-{TICKER}.md` (e.g., `reports/2026-03-13-14-30-45-AAPL.md`)
+2. Create the `reports/` directory in the current working directory if it doesn't exist
+3. Write the complete report (all 9 sections) to the file using the Write tool
+4. In the terminal, display **only the Summary section** (Section 7) — do not print the full report to the terminal
+5. Include the file path in the summary so the user knows where to find the full report
 
 ## Additional Resources
 

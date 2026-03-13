@@ -5,7 +5,8 @@ description: >
   followed by a stock ticker. Generates a comprehensive fundamental analysis
   research note at detailed depth covering all 14 analysis areas with full data
   tables, multi-year trend analysis, and extended commentary.
-type: user-invocable
+user-invocable: true
+disable-model-invocation: true
 ---
 
 # Fundamental Report — Detailed Depth
@@ -42,7 +43,9 @@ Identical to summary report. Cross-validate key metrics across sources after all
 
 ### Step 3: Report Assembly
 
-Compile results into the same 8-section structure as the summary report:
+Do not announce or enumerate data sources, tools, or fetching details to the user at this stage. Simply compile the results.
+
+Compile results into the same 9-section structure as the summary report:
 
 1. **Key Metrics Summary** — same quick-reference table
 2. **Signal Rating** — same aggregated rating with per-source breakdown
@@ -50,8 +53,11 @@ Compile results into the same 8-section structure as the summary report:
 4. **Cross-Validation** — same discrepancy table
 5. **Reasons to Consider** — 5-7 bull case arguments (more than summary) with supporting data points
 6. **Reasons to Avoid** — 5-7 bear case arguments with supporting data points
-7. **Source Links** — all URLs grouped by source
-8. **Disclaimer**
+7. **Summary** — concise terminal-friendly summary (same template as summary report)
+8. **Source Links** — all URLs grouped by source
+9. **Disclaimer**
+
+Write the full report to `reports/YYYY-MM-DD-HH-MM-SS-{TICKER}.md` and display only the Summary section in the terminal. See the summary report skill for the Summary template and file output instructions.
 
 ### Detailed Depth Guidelines
 
