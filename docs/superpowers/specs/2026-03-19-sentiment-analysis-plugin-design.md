@@ -234,7 +234,7 @@ description: >
 **Steps**:
 1. WebFetch StockTwits symbol stream for ticker
 2. Filter messages with `sentiment.basic` field (skip unlabeled)
-3. Count bullish vs bearish from last 30 labeled messages
+3. Count bullish vs bearish from all labeled messages in the response (however many are present — typically 5–20)
 4. `stocktwits_score = (bullish - bearish) / total_labeled × 10`
 5. If ticker not found or stream empty: note "StockTwits: No data available", exclude from composite
 6. Return: channel score, bullish count, bearish count, total labeled, 1 sample bullish + 1 sample bearish message
