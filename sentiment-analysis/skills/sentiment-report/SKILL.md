@@ -2,8 +2,10 @@
 name: sentiment-report
 description: >
   This skill should be used when the user asks for a full sentiment report,
-  comprehensive sentiment analysis, complete sentiment summary, or explicitly
-  runs /sentiment-report for a publicly traded company.
+  comprehensive sentiment analysis, complete sentiment summary, sentiment check,
+  overall market mood, how sentiment looks, or explicitly runs /sentiment-report
+  for a publicly traded company. Also use when the user asks to "analyze sentiment",
+  "run sentiment analysis", or "give me a sentiment overview" for a stock.
 ---
 
 # Sentiment Report

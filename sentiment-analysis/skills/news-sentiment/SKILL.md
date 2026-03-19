@@ -17,10 +17,10 @@ each headline for sentiment. Produce a news channel score from -10 (very bearish
 
 ## Step 1 — Resolve Ticker and Company Name
 
-If the user provided a ticker, confirm the company name via WebSearch:
+If a ticker is provided, confirm the company name via WebSearch:
 `{ticker} stock company name site:finance.yahoo.com OR site:stockanalysis.com`
 
-If only a company name was provided, resolve the ticker the same way.
+If only a company name is provided, resolve the ticker the same way.
 
 ## Step 2 — Read Config for NewsAPI Key
 
