@@ -1,0 +1,14 @@
+{
+  "name": "sentiment-analysis",
+  "description": "24-hour market sentiment analysis from financial news, Reddit (r/wallstreetbets + r/stocks), and StockTwits. Produces a normalized -10 to +10 composite sentiment score.",
+  "version": "0.0.1",
+  "agents": [
+    "./agents/sentiment-analyst.md"
+  ],
+  "skills": [
+    "./skills/news-sentiment",
+    "./skills/reddit-sentiment",
+    "./skills/stocktwits-sentiment",
+    "./skills/sentiment-report"
+  ]
+}
