@@ -68,7 +68,7 @@
       "name": "sentiment-analysis",
       "source": "./sentiment-analysis",
       "description": "24-hour market sentiment analysis from financial news, Reddit (r/wallstreetbets + r/stocks), and StockTwits. Produces a normalized -10 to +10 composite sentiment score.",
-      "version": "0.0.1",
+      "version": "0.0.2",
       "category": "finance",
       "strict": false,
       "author": {

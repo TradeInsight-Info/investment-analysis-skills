@@ -10,50 +10,71 @@ description: >
 
 ## Purpose
 
-Fetch the StockTwits message stream for a ticker, tally bullish vs bearish
-self-labeled messages, and produce a channel score from -10 to +10. No LLM
-scoring needed — StockTwits users self-label messages as Bullish or Bearish.
+Fetch StockTwits sentiment for a ticker by scraping the symbol page, tally
+bullish vs bearish self-labeled messages, and produce a channel score from
+-10 to +10.
 
-## Step 1 — Fetch Stream
+## Step 1 — Fetch Symbol Page
 
-WebFetch (no API key required, no special headers):
+WebFetch the StockTwits symbol page with this prompt:
+> "Extract: (1) bullish message count or percentage, (2) bearish message count
+> or percentage, (3) total labeled messages, (4) any overall sentiment label
+> (e.g. Bullish, Bearish, Extremely Bullish, Extremely Bearish, Neutral),
+> (5) up to 2 recent message bodies labeled Bullish and up to 2 labeled Bearish."
 
 ```
-https://api.stocktwits.com/api/2/streams/symbol/{ticker}.json
+https://stocktwits.com/symbol/{ticker}
 ```
 
-## Step 2 — Filter and Count
+If that page returns no useful data, retry with:
 
-From the `messages` array, filter to messages where `entities.sentiment.basic`
-is `"Bullish"` or `"Bearish"`. Messages without this field are excluded.
+```
+https://stocktwits.com/symbol/{ticker}/sentiment
+```
 
-Count:
-- `bullish_count` — Bullish-labeled messages
-- `bearish_count` — Bearish-labeled messages
-- `total_labeled` = `bullish_count + bearish_count`
+## Step 2 — Extract Counts or Label
 
-Use however many labeled messages are present in the single response
-(the public endpoint returns up to 30 messages per call; typically 5–20 are labeled).
-No pagination needed.
+**If raw counts are available** (bullish_count and bearish_count):
+- Set `score_method = "ratio"`
+- `total_labeled = bullish_count + bearish_count`
+- Proceed to Step 3a.
 
-**If the ticker is not found or the API returns an error:**
+**If only a percentage is available** (e.g. "73% Bullish"):
+- Derive counts: `bullish_count = round(pct × total_labeled)`, `bearish_count = total_labeled - bullish_count`
+- Set `score_method = "pct-derived"`
+- Proceed to Step 3a.
+
+**If only a qualitative label is available** (no counts or percentages):
+- Set `score_method = "label-derived"`
+- Map label to score and proceed to Step 3b:
+
+| StockTwits Label | stocktwits_score |
+|-----------------|-----------------|
+| Extremely Bullish | +8.5 |
+| Bullish | +5.0 |
+| Neutral | 0.0 |
+| Bearish | -5.0 |
+| Extremely Bearish | -8.5 |
+
+**If the page fails to load, returns an error, or yields no sentiment data:**
 Set `stocktwits_available = false`.
-Note: "StockTwits: Ticker {ticker} not found or API error"
+Note: "StockTwits: Page unavailable or no sentiment data found"
 
-**If `total_labeled = 0`** (messages present but none labeled):
-Set `stocktwits_available = false`.
-Note: "StockTwits: No labeled messages in stream — cannot compute score"
-
-## Step 3 — Compute Channel Score
+## Step 3a — Compute Score from Ratio
 
 ```
 stocktwits_score = (bullish_count - bearish_count) / total_labeled × 10
 ```
 
+## Step 3b — Score from Label (skip if 3a used)
+
+Use the mapped score from the label table in Step 2. Set `total_labeled = N/A`.
+
 ## Step 4 — Sample Messages
 
-Select the most recent Bullish-labeled message and most recent Bearish-labeled
-message from the stream. If only one direction exists, show what is available.
+Extract the most recent Bullish-labeled message body and most recent
+Bearish-labeled message body from the page content. If unavailable, note
+"Sample unavailable".
 
 ## Step 5 — Output
 
@@ -62,6 +83,7 @@ STOCKTWITS SENTIMENT RESULT
 Ticker: {ticker}
 Channel Score: {stocktwits_score} / 10
 Signal: {label per signal bands below}
+Score Method: {ratio | pct-derived | label-derived}
 Labeled Messages: {total_labeled} ({bullish_count} bullish / {bearish_count} bearish)
 
 Sample Bullish: "{message_body}"
